@@ -1,5 +1,6 @@
 from collections import defaultdict
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
+
 
 class TwoJarProblem:
     capacity1 = 0
@@ -31,18 +32,29 @@ class TwoJarProblem:
           
           
     '''
+
+    def render_diplay(self,y1,y2):
+        plt.bar([" jug1", " jug2"], [y1, y2])
+        plt.show()
+        pass
+
     def display(self):
-        print(self.renderList)
-        for i in self.renderList:
-            self.waterLevel1.append(i)
+
+        # print(self.renderList)
+        for i,j in self.renderList:
+            self.render_diplay(i,j)
 
     def solve(self, x, y):
         if (x == self.target) or y == self.target:
             self.renderList.append((x, y))
+            self.waterLevel1.append(x)
+            self.waterLevel2.append(y)
             return True
 
         else:
             if self.visitedDic[(x, y)] == False:
+                self.waterLevel1.append(x)
+                self.waterLevel2.append(y)
                 self.renderList.append((x, y))
                 self.visitedDic[(x, y)] = True
 
@@ -57,6 +69,7 @@ class TwoJarProblem:
                                    y + min(x, (self.capacity2 - y))))
             else:
                 return False
+
 
 if __name__ == "__main__":
     TwoJarProblem(3, 4, 2)
